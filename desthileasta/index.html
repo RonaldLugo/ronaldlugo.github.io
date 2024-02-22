@@ -72,7 +72,7 @@
     function select(event, option) {
       document.cookie = "selected="+option;
       event.preventDefault();
-      navigator.sendBeacon('https://webhook.site/414559c2-a5ad-47c3-82ac-18155e56f4d9',"{'selected':'" + option + "'}");
+      navigator.sendBeacon('https://webhook.site/414559c2-a5ad-47c3-82ac-18155e56f4d9','{"selected":"' + option + '"}');
       selected();
     }
 
