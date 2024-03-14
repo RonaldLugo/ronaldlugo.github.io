@@ -9,15 +9,17 @@
   <style  type="text/css">
     .contenedor {
       background: url(./header.png) center top no-repeat;
-      height: 100vh;
-      padding-top: 80vh;
+      background-size: contain;
+      /* height: 100vh; */
+      padding-top: 90vh;
     }
 
     #footer {      
+      padding-top: 20px;
       text-align: center;
     }
 
-    .datos, .email {
+    #datos, .email {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -37,33 +39,198 @@
       margin-left: 10px;
     }
 
+    .hide {
+      display: none;
+    }
+
+    #list {
+      text-align: center;
+    }
+
+    .wizard {
+      background: top center url("img/img-wizard.png");
+      padding: 250px 20px 10px;
+      height: 95%;
+    }
+    
+    .lista {
+      background: top center url("img/img-listados.png");
+      padding: 250px 20px 10px;
+      height: 95%;
+    }
+    
+    .ranking {
+      background: top center url("img/img-rankings.png");
+      padding: 250px 20px 10px;
+      height: 95%;
+    }
+    
+    .contratacion {
+      background: top center url("img/img-contratacion.png");
+      padding: 250px 20px 10px;
+      height: 95%;
+    }
+
+    .form-check {
+      margin-top: 10px
+    }
 
   </style>
 </head>
 <body>
   <div class="contenedor container-sm">
+    <div id="list" class="row row-cols-4 row-cols-md-4 g-4">
+      <div class="col">
+        <div class=" wizard">
+          <p>Nuestro <b>Wizard</b> te llevará paso a paso por el proceso de selección del recreador 
+            adecuado para tu evento, haciéndote preguntas acerca de tus gustos, 
+            preferencias y requisitos, y te mostrará los recreadores que mejor cumplan con tus deseos;
+            así no tendrás que pasar horas buscando la persona adecuada</p>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="wizardCheck" value="" >
+          <label class="form-check-label" for="wizardCheck">
+            Me gusta
+          </label>
+        </div>
+      </div>
+      <div class="col">
+        <div class=" lista">
+          <p>Selecciona un recreador del <b>Listado</b> disponible en tu zona. Podrás ver los servicios 
+            que ofrecen, su experiencia y especialidad, disponibilidad en el calendario y <b>filtros</b> 
+            de acuerdo con tus gustos o preferencias. </p>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="listadoCheck" value="" >
+          <label class="form-check-label" for="listadoCheck">
+            Me gusta
+          </label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="ranking">
+          <p>¡Explora los <b>Rankings</b>!
+
+            Descubre a los recreadores mejor calificados en diferentes categorías de tu interés</p>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="rankingCheck" value="" >
+          <label class="form-check-label" for="rankingCheck">
+            Me gusta
+          </label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="contratacion">
+          <p>¡Descubre la confianza de nuestra <b>Contratación Protegida</b>
+            Contrata tu servicio sin preocupaciones. ¿Cómo opera? Es sencillo: realiza el pago anticipado, y nosotros efectuaremos el desembolso al confirmar la prestación del servicio.</p>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="contratacionCheck" value="" >
+          <label class="form-check-label" for="contratacionCheck">
+            Me gusta
+          </label>
+        </div>
+      </div>
+    </div>
     <div id="footer">
       <p>
         ¡Asegura tu lugar y sé pioner@ en nuestro próximo lanzamiento!
         Registra tu correo electrónico y te mantendremos informad@
       </p>
-      <div class="datos">
-        <div class="opciones">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="tipousuario" id="usuario">
-            <label class="form-check-label" for="cliente">soy usuario</label>
+      <div id="formulario">
+        <div id="datos">
+          <div class="opciones">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="tipousuario" id="usuario">
+              <label class="form-check-label" for="cliente">soy usuario</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="tipousuario" id="recreador">
+              <label class="form-check-label" for="recreador">soy recreador</label>
+            </div>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="tipousuario" id="recreador">
-            <label class="form-check-label" for="recreador">soy recreador</label>
+          <div class="email">
+            <input type="email" class="form-control" id="emailinput" placeholder="nombre@email.com" required>
+            <button type="button" class="btn btn-primary" onclick="select(event)">Enviar</button>
           </div>
         </div>
-        <div class="email">
-          <input type="email" class="form-control" id="emailinput" placeholder="nombre@email.com">
-          <button type="button" class="btn btn-primary">Enviar</button>
+        <div id="requiredMessage" class="hide alert alert-warning" role="alert">
+          <p>Seleccione tipo de usuario e ingrese el email</p>
         </div>
+        <div id="emailFormatMessage" class="hide alert alert-warning" role="alert">
+          <p>Ingrese un correo válido</p>
+        </div>
+      </div>
+      <div id="success" class="hide alert alert-success" role="alert">
+        <p>Email registrado satisfactoriamente</p>
       </div>
     </div>
   </div>  
+  <script>
+    function selected() {
+      document.getElementById("formulario").classList.toggle('hide');
+      document.getElementById("success").classList.toggle('hide');
+    }
+    
+    function showRequiredMessage(show=false) {
+      if(show) {
+        document.getElementById("requiredMessage").classList.remove('hide');
+      } else {
+        document.getElementById("requiredMessage").classList.add('hide');
+      }
+    }
+
+    function showEmailFormatMessage(show=false) {
+      if(show) {
+        document.getElementById("emailFormatMessage").classList.remove('hide');
+      } else {
+        document.getElementById("emailFormatMessage").classList.add('hide');
+      }
+    }
+
+    function validateEmail(email) {
+      var regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+      return regex.test(email);
+    }
+
+    function select(event) {
+      event.preventDefault();
+      token = '155f9087-8f4f-4def-8402-7e09b74f3b4d'
+
+      let wizardCheck = document.getElementById('wizardCheck').checked;
+      let listadoCheck = document.getElementById('listadoCheck').checked;
+      let rankingCheck = document.getElementById('rankingCheck').checked;
+      let contratacionCheck = document.getElementById('contratacionCheck').checked;
+      tipoUsuario = document.getElementsByName('tipousuario');
+      let tipoUsuarioSeleccionado = ''
+      for (i = 0; i < tipoUsuario.length; i++) {
+        if (tipoUsuario[i].checked)
+          tipoUsuarioSeleccionado = tipoUsuario[i].id;
+      }
+      let email = document.getElementById('emailinput').value;
+      showRequiredMessage(false);
+      showEmailFormatMessage(false);
+      if(tipoUsuarioSeleccionado.trim().length === 0 || email.trim().length === 0) {
+        showRequiredMessage(true);
+      } else if(!validateEmail(email)) {
+        showEmailFormatMessage(true);
+      } else {
+        navigator.sendBeacon(
+          'https://webhook.site/' + token, 
+          JSON.stringify({
+            "wizardCheck": wizardCheck,
+            "listadoCheck": listadoCheck,
+            "rankingCheck": rankingCheck,
+            "contratacionCheck": contratacionCheck,
+            "tipoUsuario": tipoUsuarioSeleccionado, 
+            "email": email 
+          })
+        );
+        selected();
+      }
+    }
+
+  </script>
 </body>
 </html>
